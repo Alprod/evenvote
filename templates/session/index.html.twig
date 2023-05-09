@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1 class='text-center py-5 my-5'>EvenVote Schedule</h1>
+	{% for session in sessions %}
+		<article id='session-{{ session.id }}' class='border-dark border-3 border-bottom'>
+			{% include '/includes/session.html.twig' with {'session':session} %}
+		</article>
+	{% endfor %}
+{% endblock %}

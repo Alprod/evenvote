@@ -1,0 +1,32 @@
+{
+  "devDependencies": {
+    "@popperjs/core": "^2.11.7",
+    "@symfony/webpack-encore": "^4.3.0",
+    "autoprefixer": "^10.4.14",
+    "bootstrap": "^5.2.3",
+    "jquery": "^3.6.4",
+    "postcss-loader": "^7.3.0",
+    "sass": "^1.62.1",
+    "sass-loader": "^13.2.2",
+    "vue": "^2.7.14",
+    "vue-loader": "^15.10.1",
+    "vue-template-compiler": "^2.7.14",
+    "webpack-notifier": "^1.15.0"
+  },
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.1",
+    "@symfony/stimulus-bridge": "^3.2.2",
+    "vue-star-rating": "^1.7.0"
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "not dead"
+  ]
+}

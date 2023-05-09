@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}| {{ session.title }}{% endblock %}
+{% block body %}
+	<div class='my-5 py-5'>
+		{% include '/includes/session.html.twig' with {'session':session} %}
+		<section id='feedback'>
+			<feedback session-id='{{ session.id }}'></feedback>
+		</section>
+	<a class='btn btn-success' href='{{ path('app_session') }}'>Retour à la liste</a>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('feedback') }}
+{% endblock %}
+
