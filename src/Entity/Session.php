@@ -45,9 +45,13 @@ class Session
     #[ORM\OneToMany(mappedBy: 'session', targetEntity: Feedback::class)]
     private Collection $feedback;
 
+    #[ORM\OneToMany(mappedBy: 'session', targetEntity: Reaction::class)]
+    private Collection $reactions;
+
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
+        $this->reactions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +131,36 @@ class Session
             // set the owning side to null (unless already changed)
             if ($feedback->getSession() === $this) {
                 $feedback->setSession(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reaction>
+     */
+    public function getReactions(): Collection
+    {
+        return $this->reactions;
+    }
+
+    public function addReaction(Reaction $reaction): self
+    {
+        if (!$this->reactions->contains($reaction)) {
+            $this->reactions->add($reaction);
+            $reaction->setSession($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReaction(Reaction $reaction): self
+    {
+        if ($this->reactions->removeElement($reaction)) {
+            // set the owning side to null (unless already changed)
+            if ($reaction->getSession() === $this) {
+                $reaction->setSession(null);
             }
         }
 
