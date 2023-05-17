@@ -29,10 +29,10 @@ export default {
 
     const session = `/api/session/${this.sessionId}`;
 
-    fetch(`${session}/reactions`)
+    fetch(`${session}/reaction`)
         .then(resp => resp.json().then(data => ({
           data,
-          hubUrl: resp.headers.get('Link').match(/<([^>]+)>;\s+rel="[^"]*mercure[^"]*"/)
+          hubUrl: resp.headers.get('Link').match(/<([^>]+)>;\s+rel="[^"]*mercure[^"]*"/)[1]
         })) )
         .then(({data, hubUrl}) => {
           Object.entries(data).forEach( ([type, nb]) => this[type] = nb );

@@ -21,11 +21,11 @@ use Doctrine\ORM\Mapping as ORM;
 	paginationItemsPerPage : 0
 )]
 #[ApiResource(
-	uriTemplate: '/session/{id}/reactions',
+	uriTemplate: '/session/{id}/reaction',
 	operations: [
 		new GetCollection(),
 	],uriVariables: [
-	'id' => new Link(toProperty: 'session', fromClass: Reaction::class)
+	'id' => new Link(toProperty: 'session', fromClass: Session::class)
 ]
 )]
 class Reaction
@@ -44,7 +44,12 @@ class Reaction
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
-    public function getId(): ?int
+	public function __construct()
+	{
+		$this->createdAt = new \DateTimeImmutable('now');
+	}
+
+	public function getId(): ?int
     {
         return $this->id;
     }
