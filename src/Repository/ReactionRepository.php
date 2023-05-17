@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Reaction;
+use App\Entity\Session;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -38,6 +39,24 @@ class ReactionRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+	public function countReaction(Session $sessionId): array|float|int|string
+	{
+		$rows = $this->createQueryBuilder('r')
+			->select('r.type COUNT(r.id) as nb')
+			->where('r.session = :session_id')
+			->setParameter('session_id', $sessionId)
+			->groupBy('r.type')
+			->getQuery()
+			->getArrayResult();
+
+		$data = [];
+
+		foreach ($rows as $row){
+			$data[$row['type']] = (int) $row['nb'];
+		}
+		return $data;
+	}
 
 //    /**
 //     * @return Reaction[] Returns an array of Reaction objects

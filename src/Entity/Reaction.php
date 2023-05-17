@@ -21,14 +21,6 @@ use Doctrine\ORM\Mapping as ORM;
 	paginationItemsPerPage : 0
 )]
 #[ApiResource(
-	uriTemplate: '/session/{id}/reaction',
-	operations: [
-		new Get(),
-	],uriVariables: [
-		'id' => new Link(toProperty: 'session', fromClass: Reaction::class)
-	]
-)]
-#[ApiResource(
 	uriTemplate: '/session/{id}/reactions',
 	operations: [
 		new GetCollection(),

@@ -14,25 +14,17 @@ class SessionTest extends PantherTestCase
 	use ResetDatabase, Factories;
 
 	private const SESSION_TITLE = 'Et quia odit ipsam doloremque';
-	private Client $client;
-	private Proxy $session;
-
-	protected function setUp(): void
-	{
-		parent::setUp();
-		$this->client = static::createPantherClient();
-		$this->session = SessionFactory::createOne();
-	}
 
 	/**
 	 * @return void
 	 */
 	public function testViewSession(): void
 	{
-		$crawler = $this->client->request('GET','/');
+		$client = static::createPantherClient();
+		$crawler = $client->request('GET','/');
 		$this->assertSame('EvenVote Schedule', $crawler->filter('h1:first-of-type')->text());
 
-		$this->client->takeScreenshot('/tmp/Symfony/test_view_real_time_panther.png');
+		$client->takeScreenshot('/tmp/Symfony/test_view_real_time_panther.png');
 	}
 
 	/**
@@ -41,16 +33,17 @@ class SessionTest extends PantherTestCase
 	 */
 	public function testEmptyFeedbackList(): void
 	{
+		$client = static::createPantherClient();
+		$session = SessionFactory::createOne();
+		$session->enableAutoRefresh();
 
-		$this->session->enableAutoRefresh();
-
-		$this->client->request('GET', '/');
-		$crawler = $this->client->clickLink($this->session->getTitle());
-		$this->assertSame($this->session->getTitle(), $crawler->filter('h1:first-of-type')->text());
-		$this->client->waitFor('#feedback div p');
+		$client->request('GET', '/');
+		$crawler = $client->clickLink($session->getTitle());
+		$this->assertSame($session->getTitle(), $crawler->filter('h1:first-of-type')->text());
+		$client->waitFor('#feedback div p');
 		$this->assertSame('Pas de feedback pour le moment', $crawler->filter('#feedback div p')->text());
 
-		$this->client->takeScreenshot('/tmp/Symfony/test_feedback_list_empty_panther.png');
+		$client->takeScreenshot('/tmp/Symfony/test_feedback_list_empty_panther.png');
 	}
 
 	/**
@@ -58,22 +51,26 @@ class SessionTest extends PantherTestCase
 	 */
 	public function testGivenFeedback(): void
 	{
-		$this->session->enableAutoRefresh();
+		$client = static::createPantherClient();
+		$session = SessionFactory::createOne();
+		$session->enableAutoRefresh();
 
-		$this->client->request('GET', '/session/'.$this->session->getId());
+		$session->enableAutoRefresh();
 
-		$this->client->getMouse()->clickTo('.vue-star-rating-pointer:nth-of-type(3)');
-		$crawler = $this->client->submitForm('Valider',[
+		$client->request('GET', '/session/'.$session->getId());
+
+		$client->getMouse()->clickTo('.vue-star-rating-pointer:nth-of-type(3)');
+		$crawler = $client->submitForm('Valider',[
 			'author' => 'François',
 			'comment' => 'Je vous ai trouver génial'
 		]);
 
 
-		$this->client->waitFor('#feedback div ul li');
+		$client->waitFor('#feedback div ul li');
 		$this->assertStringContainsString( 'Je vous ai trouver génial', $crawler->filter( '#feedback li')->text());
 		$this->assertNotSame('Pas de feedback pour le moment', $crawler->filter('#feedback div p')->text());
 
-		$this->client->takeScreenshot('/tmp/Symfony/test_given_feedback_panther.png');
+		$client->takeScreenshot('/tmp/Symfony/test_given_feedback_panther.png');
 
 	}
 }

@@ -22,7 +22,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-   .addEntry('feedback', './assets/vue/feedback/index.js')
+    .addEntry('feedback', './assets/vue/feedback/index.js')
+    .addEntry('reaction', './assets/vue/reaction/index.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')
