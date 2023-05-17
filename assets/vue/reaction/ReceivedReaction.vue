@@ -8,7 +8,6 @@
 
 <script>
 const randomIntFormInterval = (min,max) => Math.floor(Math.random() * (max - min + 1) + min);
-
 export default {
   data(){
     return {
@@ -28,9 +27,10 @@ export default {
       };
 
       this.$forceUpdate();
+
       setTimeout(() => {
         delete this.reactions[i];
-        this.$forcUpdate();
+        this.$forceUpdate();
       }, 2000);
     }
   }

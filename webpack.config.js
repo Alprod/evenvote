@@ -22,6 +22,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('glob', './assets/js/global.js')
     .addEntry('feedback', './assets/vue/feedback/index.js')
     .addEntry('reaction', './assets/vue/reaction/index.js')
 
