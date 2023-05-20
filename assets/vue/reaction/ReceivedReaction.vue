@@ -1,7 +1,7 @@
 <template>
   <div>
         <template v-for="(item, index) in reactions">
-            <i :class="['far', `fa-grin-${item.type}`, 'fa-2x', 'animated']" :style="{left: `${item.left}%`, transform: `rotate(${item.rotate}deg)` }" :key="index"></i>
+          <font-awesome-icon :icon="['far', `grin-${item.type}`,'animated']" type='button' :style="{color: '#669c35', left: `${item.left}%`, transform: `rotate(${item.rotate}deg)`} " size='2x' />
         </template>
     </div>
 </template>

@@ -8,10 +8,11 @@ services:
     restart: unless-stopped
     environment:
       SERVER_NAME: ':80'
-      MERCURE_PUBLISHER_JWT_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6W10sInB1Ymxpc2giOlsiKiJdfX0.iet30AwoLji0CfuBtCf1gaFZT5L-qOi6ZyW-om4l3zY
-      MERCURE_SUBSCRIBER_JWT_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6W10sInB1Ymxpc2giOlsiKiJdfX0.iet30AwoLji0CfuBtCf1gaFZT5L-qOi6ZyW-om4l3zY
+      MERCURE_URL: http://localhost:3000/hub
+      MERCURE_PUBLISHER_JWT_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdLCJzdWJzY3JpYmUiOlsiKiJdfX0.IqyUyPdKkAX_ekyFfDy0if39RavHznbzB4WX-p_2DG8
+      MERCURE_SUBSCRIBER_JWT_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdLCJzdWJzY3JpYmUiOlsiKiJdfX0.IqyUyPdKkAX_ekyFfDy0if39RavHznbzB4WX-p_2DG8
       # Set the URL of your Symfony project (without trailing slash!) as value of the cors_origins directive
-      MERCURE_EXTRA_DIRECTIVES: |
+      MERCURE_EXTRA_DIRECTIVES:
         cors_origins http://127.0.0.1:8000
     # Comment the following line to disable the development mode
     command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev

@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 	uriTemplate : '/session/{id}/feedback',
 	operations : [new GetCollection()],
 	uriVariables : [
-		'id' => new Link( toProperty : 'session', fromClass : Session::class )
+		'id' => new Link( toProperty : 'session', fromClass : Feedback::class )
 	]
 )]
 #[ORM\Entity(repositoryClass: FeedbackRepository::class)]

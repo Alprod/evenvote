@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Api\UrlGeneratorInterface;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -23,10 +24,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource(
 	uriTemplate: '/session/{id}/reaction',
 	operations: [
-		new GetCollection(),
+		new GetCollection(
+			paginationEnabled: false
+		),
 	],uriVariables: [
-	'id' => new Link(toProperty: 'session', fromClass: Session::class)
-]
+	'id' => new Link(toProperty: 'session', fromClass: Reaction::class)
+	]
 )]
 class Reaction
 {

@@ -28,6 +28,8 @@
     "@fortawesome/vue-fontawesome": "^2.0.10",
     "@hotwired/stimulus": "^3.2.1",
     "@symfony/stimulus-bridge": "^3.2.2",
+    "parse-link-header": "^2.0.0",
+    "querystring": "^0.2.1",
     "vue-star-rating": "^1.7.0"
   },
   "browserslist": [
