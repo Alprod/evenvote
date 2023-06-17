@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Api\UrlGeneratorInterface;
+
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -12,23 +12,16 @@ use App\Repository\ReactionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ReactionRepository::class)]
+
 #[ApiResource(
 	operations : [
-		new Get(),
-		new Post()
-	],
-	mercure : true,
-	paginationItemsPerPage : 0
-)]
-#[ApiResource(
-	uriTemplate: '/session/{id}/reaction',
-	operations: [
 		new GetCollection(),
-	],uriVariables: [
-	'id' => new Link(toProperty: 'session', fromClass: Reaction::class)
-	]
+		new Get(),
+		new Post(),
+	],
+	mercure: true	
 )]
+#[ORM\Entity(repositoryClass: ReactionRepository::class)]
 class Reaction
 {
     #[ORM\Id]

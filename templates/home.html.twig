@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} | Home
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1 class="h1 text-center m-4">{{ titre }}</h1>
+        <section>
+            <p>
+                EvenVote révolutionne les événements en direct avec une application web interactive.
+                Les participants peuvent exprimer en temps réel leur ressenti grâce à des commentaires et des icônes émotionnelles.
+                Les organisateurs d'événements bénéficient d'une plateforme conviviale pour mesurer l'engagement et ajuster les contenus.
+                L'interaction dynamique entre participants et animateurs crée un environnement stimulant.
+            </p>
+            <p>
+                EvenVote améliore l'expérience des conférences et formations, fournissant des résultats plus significatifs.
+                Découvrez EvenVote et transformez vos événements en expériences engageantes.
+            </p>
+            <div>
+                <a href="{{ path('app_session') }}" class="btn btn-primary">Tout voire</a>
+            </div>
+        </section>
+    </div>
+{% endblock %}
