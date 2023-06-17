@@ -1,13 +1,13 @@
 <template>
   <ul class='list-unstyled d-flex flex-row'>
     <li class='p-2' @click="addReaction('hearts')">
-      <font-awesome-icon :icon="['far', 'grin-hearts']" type='button' style="color: #669c35 ;" size='7x' />
+      <font-awesome-icon :icon="['far', 'face-grin-hearts']" :class="['face-hearts']" type='button' size='7x'/>
     </li>
     <li class='p-2' @click="addReaction('stars')">
-      <font-awesome-icon :icon="['far', 'grin-stars']" type='button' size="7x" style="color: #ffb43f;" />
+      <font-awesome-icon :icon="['far', 'face-grin-stars']" :class="['face-stars']" type='button' size='7x'/>
     </li>
     <li class='p-2' @click="addReaction('tears')">
-      <font-awesome-icon :icon="['far', 'grin-tears']" type='button' size='7x' style="color: #e32400;" />
+      <font-awesome-icon :icon="['far', 'face-grin-tears']" :class="['face-tears']" type='button' size='7x'/>
     </li>
   </ul>
 </template>
@@ -28,7 +28,7 @@ export default {
     }
   },
 
-  created: function () {
+  created() {
     const RR = Vue.extend(ReceivedReaction);
     const vm = new RR;
 
@@ -37,12 +37,10 @@ export default {
 
     const session = `/api/session/${this.sessionId}`;
 
-    fetch(`${session}/reaction`)
+    fetch(`${session}/reactions`)
         .then(resp => resp.json().then(data => {
           let hubUrl = null;
           let linkHeader = resp.headers.get('Link');
-          console.log( linkHeader )
-
           if (linkHeader) {
             let matchResult = linkHeader ? linkHeader.match(/<([^>]+)>;\s+rel="[^"]*mercure[^"]*"/) : null;
             if (matchResult) hubUrl = matchResult[1];
@@ -52,15 +50,23 @@ export default {
 
         }))
         .then(({data, hubUrl}) => {
+
           Object.entries(data).forEach(([type, nb]) => this[type] = nb);
+
           const es = new EventSource(`${hubUrl}?topic=${document.location.origin}/api/reactions/{id}`);
           es.onmessage = ({data}) => {
             const reaction = JSON.parse(data);
-            if (reaction.session !== session) return;
+            const s1 = reaction.session.split('/').slice(-1)
+            const s2 = session.split('/').slice(-1)
 
-            ++this[reaction.type];
-            vm.displayReceivedReaction(reaction.type)
+            let react = parseInt(s1[0])
+            let sess = parseInt(s2[0])
+
+            if(react !== sess) return;
+
+            vm.displayReceivedReaction(reaction.type);
           }
+
         })
   },
   methods: {

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -10,20 +12,27 @@ use ApiPlatform\Metadata\Post;
 use App\Repository\FeedbackRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
 	operations: [
+		new Post(),
 		new Get(),
-		new Post()
-	]
+        new GetCollection(order: ['id' => 'DESC'])
+	],
+	mercure : true
 )]
 #[ApiResource(
-	uriTemplate : '/session/{id}/feedback',
-	operations : [new GetCollection()],
-	uriVariables : [
-		'id' => new Link( toProperty : 'session', fromClass : Feedback::class )
-	]
+	uriTemplate : '/session/{id}/feedbacks',
+	operations : [
+	    new GetCollection()
+	], uriVariables : [
+	'id' => new Link(
+	    toProperty: 'session',
+	    fromClass: Feedback::class
+	)]
 )]
+#[ApiFilter(OrderFilter::class, properties: ['id' => 'DESC'])]
 #[ORM\Entity(repositoryClass: FeedbackRepository::class)]
 class Feedback
 {

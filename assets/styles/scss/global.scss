@@ -1,1 +1,29 @@
 @import "~bootstrap/scss/bootstrap";
+
+.face-hearts {
+  color: #669c35;
+}
+.face-stars {
+  color: #ffb43f;
+}
+.face-tears {
+  color: #e32400;
+}
+
+.animated {
+  animation: up 2s ease-in-out;
+  position: fixed;
+  bottom: 0;
+}
+
+@keyframes up {
+  0% {
+    opacity: 1;
+    top: 100%;
+  }
+  100% {
+    opacity: 0;
+    top: 0;
+    transform: scale(20) rotate(0deg);
+  }
+}

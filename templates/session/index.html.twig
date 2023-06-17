@@ -5,6 +5,9 @@
 	{% for session in sessions %}
 		<article id='session-{{ session.id }}' class='border-dark border-3 border-bottom'>
 			{% include '/includes/session.html.twig' with {'session':session} %}
+			<div class="m-4 d-grid gap-2 col-3 mx-auto">
+				<a href="{{ path('app_session_detail', {id: session.id}) }}" class="btn btn-primary">Come in</a>
+			</div>
 		</article>
 	{% endfor %}
 {% endblock %}

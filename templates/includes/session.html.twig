@@ -1,15 +1,14 @@
 <div class='row my-3'>
 	<div class='col-sm-12 col-md-2 col-lg-1'>
-		<p class='my-0 fw-bold text-wrap text-center text-capitalize'>{{ session.createdAt|date('D')|format_date(pattern='EEEE', locale='fr') }}</p>
+		<p class='my-0 fw-bold text-wrap text-center text-capitalize'>{{ session.createdAt|date()|format_date(pattern='EEEE', locale='fr') }}</p>
 		<p class='my-0 py-0 fw-bold text-wrap text-center fs-2'>{{ session.createdAt|date('H:i') }}</p>
-		<p class='my-2 fw-bold text-wrap text-center text-capitalize'>{{ session.createdAt|date('D')|format_date(pattern='dd MMMM', locale='fr') }}</p>
+		<p class='my-2 fw-bold text-wrap text-center text-capitalize'>{{ session.createdAt|date()|format_date(pattern='dd MMMM', locale='fr') }}</p>
 	</div>
 	<div class='col-sm-12 col-md-4 col-lg-5 my-3'>
 		{{ session.author }}
 		<h1 class='h3'>
 			<a href='{{ path('app_session_detail', {id:session.id}) }}' class='text-danger'>{{ session.title }}</a>
 		</h1>
-
 	</div>
 	<div class='col-sm-12 col-md-6 col-lg-6'>
 		<p>{{ session.summary }}</p>

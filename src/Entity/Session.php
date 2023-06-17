@@ -2,25 +2,42 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Odm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Repository\SessionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Safe\Exceptions\SessionException;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ApiResource(
 	operations: [
 		new Get(),
+		new GetCollection(
+            order: ['createdAt' => 'ASC']
+        )
+	],
+)]
+#[ApiResource(
+	uriTemplate : '/session/{id}/reactions',
+	operations : [
 		new GetCollection()
-	]
+	],
+	uriVariables : [
+		'id'=> new Link(
+			fromClass : Session::class
+		)
+	],
+	mercure : true,
+	paginationItemsPerPage : 0
 )]
 #[ORM\Entity(repositoryClass: SessionRepository::class)]
 class Session
@@ -43,6 +60,7 @@ class Session
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\OneToMany(mappedBy: 'session', targetEntity: Feedback::class)]
+    #[Groups(['feedback:read'])]
     private Collection $feedback;
 
     #[ORM\OneToMany(mappedBy: 'session', targetEntity: Reaction::class)]
