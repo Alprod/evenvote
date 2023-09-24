@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 		new Get(),
 		new Post(),
 	],
-	mercure: true
+	mercure: true	
 )]
 #[ORM\Entity(repositoryClass: ReactionRepository::class)]
 class Reaction
